@@ -3,7 +3,11 @@ DIALOG=${DIALOG=Xdialog}
 tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/test$$
 trap "rm -f $tempfile" 0 1 2 5 15
 
-$DIALOG --title "ah.kernel.maintenance (ɔ) andihafner.com 2018" \
+query() {
+dpkg -l 'linux-[ihs]*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\([-0-9]*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\)    .*/\1/;/[0-9]/!d'	
+}
+
+$DIALOG --title "ah.kernel.maintenance version 2018 (ɔ) andihafner.com" \
 	--radiolist "Tool for maintaining Linux kernels" 30 60 20 \
 "List installed kernels (short)" "" off \
 "List installed kernels (full)" "" off \
@@ -19,16 +23,14 @@ case $dialogBoxReturnValue in
 	0) #echo "'$choice' chosen."
 	case $choice in
 
-		"Screen off") ~/bin/ah_screen-off;;
-
     "List installed kernels (short)")
-      dpkg -l 'linux-[ihs]*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\([-0-9]*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | grep -v generic;;
+			query | grep -v generic;;
 
     "List installed kernels (full)")
-      dpkg -l 'linux-[ihs]*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\([-0-9]*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d';;
+			query;;
 
     "List and write to file")
-      dpkg -l 'linux-[ihs]*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\([-0-9]*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | tee zu_entfernende_Kernel;;
+      query | tee zu_entfernende_Kernel;;
 
     "Uninstall kernels according to filelist")
       cat zu_entfernende_Kernel | xargs sudo apt-get -y purge;;
@@ -36,7 +38,8 @@ case $dialogBoxReturnValue in
 		"about") Xdialog --title "ah.kernel.maintenance (ɔ) andihafner.com 2018"\
 		 	--msgbox\
 			"This is as shell script which supports you with maintaining Linux kernels.\n\
-			It's based on the 'radiobox' example of Xdialog and should be self explaining ;-)"\
+			It's based on the 'radiobox' example of Xdialog and should be self explaining ;-)\n
+			Version is 2018.05.08-08.54.56"\
 		 	10 100;;
 
 		"edit this menu")
