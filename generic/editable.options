@@ -1,0 +1,98 @@
+#!/bin/bash
+
+help.show() {                                                                   
+echo -e "                                                                       
+*********************************************************************
+* editable.options (ɔ) kmu-net.ch / andihafner.com 2022 MIT license *
+*********************************************************************
+
+Description
+
+  Generic bash script to invoke a command with an editable list of options.
+
+  Edit the option list inside this script to your needs.
+
+Syntax:
+
+  ./editable.options command
+
+The composed command is presented to you and you are asked for execution.
+
+Example:
+
+  ./editable.options ls
+
+Available options:
+
+  no input, --help or -h        Shows this help text
+
+  any other input               Shows command to execute\n"
+
+}
+
+#-------------------------------------------------------------------------------
+
+: "
+Todo:
+
+"
+
+#-------------------------------------------------------------------------------
+
+init() {
+  # echo "function 'init' invoked..."
+
+  command="$1"
+
+  options=$(
+
+  # ****************************** 
+  # * Define your options below: *
+  # ******************************
+
+  # Example for the 'ls' command:
+
+    echo -e "-l" # for the long list
+    # echo -e "-a" # show hidden files
+    echo -e "-h" # use human readable values
+
+  # You can comment out unwanted options with a leading "#"
+
+  )
+
+  echo -e "\nComposed command: \"$command $(echo $options)\"\n"
+}
+
+#-------------------------------------------------------------------------------
+
+ask() {
+
+  read -p "Execute command? y/[n]: " input
+  input=${input:-n}
+  # echo $input
+  echo -e "\n"
+
+  if [ "$input" = "y" ]; then
+    $command $options
+  fi
+
+  echo -e "\n"
+}
+
+main() {
+  # echo "function 'main' invoked..."
+
+  init $1
+  ask
+}
+
+#-------------------------------------------------------------------------------
+
+case "$1" in
+
+	""|"--help"|"-h")    help.show;;
+
+  *)                   main $1;;	
+
+esac
+
