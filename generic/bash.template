@@ -1,0 +1,54 @@
+﻿#!/bin/bash
+
+help.show() {                                                                   
+echo -e "                                                                       
+bash.template (ɔ) kmu-net.ch / andihafner.com 2018 MIT license                     
+
+Description
+
+Generic skeleton for bash scripts using function calls and input options
+
+Syntax:
+
+ AppName Options
+
+ e.g. example string
+
+Available options:
+
+ no input, --help or -h        Shows this help text\n"
+}
+
+#-------------------------------------------------------------------------------
+
+: "
+Todo:
+
+
+"
+
+#-------------------------------------------------------------------------------
+
+init() {
+  echo "function 'init' invoked..."
+}
+
+#-------------------------------------------------------------------------------
+
+
+
+main() {
+  init
+  echo "function 'main' invoked..."
+}
+
+#-------------------------------------------------------------------------------
+
+case "$1" in
+
+	""|"--help"|"-h")    help.show;;
+
+  *)                   main ;;	
+
+esac
+
