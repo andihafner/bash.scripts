@@ -1,0 +1,14 @@
+#!/bin/bash
+
+_ah.substring.return.if.not.in.string() {
+
+: ' SYNTAX: _ah.substring.return.if.not.in.string SUBSTRING STRING
+
+		- Returns SUBSTRING if SUBSTRING is NOT included in STRING,
+		  otherwise returns nothing resp. an empty string.
+'
+if [ -z "$(echo $2 | grep $1)" ]
+	then 
+		echo "$1"
+fi
+}	
