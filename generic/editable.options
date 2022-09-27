@@ -1,9 +1,9 @@
 #!/bin/bash
 
-help.show() {                                                                   
-echo -e "                                                                       
+help.show() {
+  echo -e "                                                                       
 *********************************************************************
-* editable.options (ɔ) kmu-net.ch / andihafner.com 2022 MIT license *
+* editable.options (ↄ) kmu-net.ch / andihafner.com 2022 MIT license *
 *********************************************************************
 
 Description
@@ -14,7 +14,7 @@ Description
 
 Syntax:
 
-  ./editable.options command
+  ./editable.options command arguments
 
 The composed command is presented to you and you are asked for execution.
 
@@ -33,34 +33,44 @@ Available options:
 #-------------------------------------------------------------------------------
 
 : "
-Todo:
+Used resources:
+https://stackoverflow.com/questions/16553089/dynamic-variable-names-in-bash
+https://dev.to/a1ex/tricks-of-declaring-dynamic-variables-in-bash-15b9
+"
 
+#-------------------------------------------------------------------------------
+
+: "
+Todo:
 "
 
 #-------------------------------------------------------------------------------
 
 init() {
-  # echo "function 'init' invoked..."
 
   command="$1"
+ 
+  arg.set param1 $2
+  arg.set param2 $3
 
   options=$(
 
-  # ****************************** 
-  # * Define your options below: *
-  # ******************************
+    # ******************************
+    # * Define your options below: *
+    # ******************************
 
-  # Example for the 'ls' command:
+    # Example for the 'ls' command:
 
     echo -e "-l" # for the long list
     # echo -e "-a" # show hidden files
     echo -e "-h" # use human readable values
 
-  # You can comment out unwanted options with a leading "#"
+    # You can comment out unwanted options with a leading "#"
 
   )
 
-  echo -e "\nComposed command: \"$command $(echo $options)\"\n"
+  echo -e "\nComposed command: \"$command $(echo $options)$param1$param2\"\n" | tee editable.options_$(date +%Y%m%d_%H%M%S).log
+
 }
 
 #-------------------------------------------------------------------------------
@@ -79,10 +89,21 @@ ask() {
   echo -e "\n"
 }
 
-main() {
-  # echo "function 'main' invoked..."
+arg.set() {
 
-  init $1
+  # This function adds a leading space to a given argument.
+  # The purpose is to avoid trailing spaces in the final output if no
+  # arguments are given.
+
+  if [ -n "$2" ]
+    then
+      declare -g $1=" $2"
+      #echo $param1
+  fi
+}
+
+main() {
+  init $*
   ask
 }
 
@@ -90,9 +111,8 @@ main() {
 
 case "$1" in
 
-	""|"--help"|"-h")    help.show;;
+"" | "--help" | "-h") help.show ;;
 
-  *)                   main $1;;	
+*) main $*;;
 
 esac
-
