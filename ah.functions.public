@@ -12,3 +12,7 @@ if [ -z "$(echo $2 | grep $1)" ]
 		echo "$1"
 fi
 }	
+
+_ah.cheat.sh.with.less.pager() {
+	cht.sh $1 | less -N -R
+}
