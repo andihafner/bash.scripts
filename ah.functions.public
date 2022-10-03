@@ -14,5 +14,5 @@ fi
 }	
 
 _ah.cheat.sh.with.less.pager() {
-	cht.sh $1 | less -N -R
+	curl -s cht.sh/$1?style=tango | less -N -R
 }
