@@ -14,5 +14,9 @@ fi
 }	
 
 _ah.cheat.sh.with.less.pager() {
-	curl -s cht.sh/$1?style=tango | less -N -R
+	curl -s cht.sh/$1?style=default | less -N -R
+}
+
+_ah.tldr.sh() {
+	tldr -t base16 $*
 }
