@@ -33,3 +33,18 @@ _ah.remove.dummy.files() {
 		rm $i
 	done
 }
+
+_ah.append.string.to.files() {
+
+: ' SYNTAX: ./ah.append.string.to.files STRING FILE_1 FILE_2
+'
+
+string=$1
+
+for filename in $*; do
+	echo "$string" >> $filename
+done
+
+rm $1
+}
+
