@@ -20,3 +20,16 @@ _ah.cheat.sh.with.less.pager() {
 _ah.tldr.sh() {
 	tldr -t base16 $*
 }
+
+_ah.create.dummy.files() {
+	for ((i=1; i<=9; i++)) do
+		touch $i
+		echo $i > $i
+	done
+}
+
+_ah.remove.dummy.files() {
+	for ((i=1; i<=9; i++)) do
+		rm $i
+	done
+}
