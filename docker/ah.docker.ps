@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# andihafner.com 2023
+
+# Script which inserts a space character between the mapped ports to the output
+#  string of the docker ps command, so the url is selectable in the terminal by
+#  double click
+
+docker ps | sed 's/->/ ->/g'
