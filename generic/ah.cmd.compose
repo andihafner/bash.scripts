@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cmd=$(
+printf '%s\x20' ls # command
+printf '%s\x20' -n # option
+#printf '%s\x20' -a # disabled option
+printf '%s\x20' -l
+)
+
+echo $cmd
+echo $cmd > cmd.log
+$(echo $cmd)

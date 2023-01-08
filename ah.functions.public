@@ -20,3 +20,31 @@ _ah.cheat.sh.with.less.pager() {
 _ah.tldr.sh() {
 	tldr -t base16 $*
 }
+
+_ah.create.dummy.files() {
+	for ((i=1; i<=9; i++)) do
+		touch $i
+		echo $i > $i
+	done
+}
+
+_ah.remove.dummy.files() {
+	for ((i=1; i<=9; i++)) do
+		rm $i
+	done
+}
+
+_ah.append.string.to.files() {
+
+: ' SYNTAX: ./ah.append.string.to.files STRING FILE_1 FILE_2
+'
+
+string=$1
+
+for filename in $*; do
+	echo "$string" >> $filename
+done
+
+rm $1
+}
+
