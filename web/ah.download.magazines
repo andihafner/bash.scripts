@@ -1,0 +1,51 @@
+#!/bin/bash
+show_help() {
+echo -e "\n ah_download_magazines (ɔ) andihafner.com 2023 \n
+Simple script which is able to automatically download multiple issues of
+magazines from websites if they are named in a enumerating manner.\n"
+}
+
+: "
+Currently, this script immediately starts downloading the files from the webserver.
+If you wish to review the generated download list first, please set 'testdrive' to 'true'
+"
+testdrive="true"
+wget_options=" --no-check-certificate --no-clobber "
+cmd_line_option=$1
+
+compose_url() {
+website_url="https://www.linux-user.de/Downloads/LUCE/${year}/lu-ce_${year}-${tens_digit}${month}.pdf"
+}
+
+get_file() {
+compose_url	
+    if [ "$testdrive" == "true" ]
+        then
+					echo wget $wget_options $website_url;
+        else
+					wget $wget_options $website_url;
+    fi
+}
+
+main() {
+for year in {2012..2016}
+do
+    tens_digit="0";
+    for month in {1..9}
+    do
+        get_file
+    done
+    tens_digit="1";
+    for month in {0..2}
+    do
+        get_file
+    done
+done
+}
+
+case "$cmd_line_option" in
+	"") show_help;;
+esac
+
+# main
+
